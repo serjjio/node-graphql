@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
@@ -17,6 +18,7 @@
     "express-validator": "^5.3.0",
     "graphql-http": "^1.22.0",
     "jsonwebtoken": "^8.3.0",
+    "merge-graphql-schemas": "^1.7.8",
     "multer": "^1.4.0",
     "socket.io": "^2.1.1",
     "validator": "^10.8.0"

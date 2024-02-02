@@ -1,10 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import auth from './middleware/auth.js';
-import { graphqlHTTP } from 'express-graphql';
-import graphqlSchema from './graphql/schema.js';
-import platformResolver from "./middleware/platform-resolver.js";
-import resolver from './graphql/resolvers.js';
+import graphql from "./middleware/graphql.js";
 
 const app = express();
 
@@ -15,14 +11,7 @@ app.use(bodyParser.json());
 //app.use(auth);
 
 // GraphQL endpoint
-app.use(
-    '/graphql',
-    platformResolver,
-    graphqlHTTP((req, res) => ({
-        schema: graphqlSchema,
-        rootValue: req.resolver || resolver
-    }))
-);
+app.use('/graphql', graphql);
 
 // Example route
 app.use('/test', (req, res) => {

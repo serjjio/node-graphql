@@ -1,25 +1,22 @@
 import { buildSchema } from 'graphql';
 
 export default buildSchema(`
-    type Post {
+    type Product {
         title: String!
-        content: String!
+        identifier: String!
     }
 
-    type PostData {
-        posts: Post!
-        totalPosts: Int!
+    type ProductData {
+        items: [Product!]!
+        totalProducts: Int!
+        pageSize: Int!
     }
 
-    input PostInputData {
-        title: String!
+    input ProductInputData {
+        limit: Int
     }
 
-    type RootQuery {
-        post(inputData: PostInputData!): PostData!
-    }
-
-    schema {
-        query: RootQuery
+    type Query {
+        products(inputData: ProductInputData!): ProductData!
     }
 `);
