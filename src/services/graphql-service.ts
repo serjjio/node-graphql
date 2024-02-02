@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export class GraphqlService {
-    constructor(url) {
+    url: string
+    constructor(url: string) {
         this.url = url;
     }
 

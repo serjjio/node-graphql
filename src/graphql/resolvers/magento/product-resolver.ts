@@ -1,9 +1,9 @@
-import { GraphqlService } from "../../services/graphql-service.js";
-import ProductsSchema from '../schema/magento/Products.js';
-import Product from '../../models/Product.js';
-import { mergeResolvers } from 'merge-graphql-schemas';
+import { GraphqlService } from "../../../services/graphql-service.js";
+import ProductsSchema from '../../schema/magento/Products.js';
+import Product from '../../../models/Product.js';
 
 const graphqlService = new GraphqlService(process.env.MAGENTO_GRAPHQL_URL);
+
 export default {
     products: async (args, req) => {
         const variables = {filter: {}}

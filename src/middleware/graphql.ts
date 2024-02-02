@@ -1,7 +1,7 @@
 import { graphqlHTTP } from 'express-graphql';
 
-import graphqlSchema from '../graphql/schema.js';
-import magento from '../graphql/resolvers/magento2.js';
+import schema from '../graphql/combined-schema.js';
+import magento from '../graphql/resolvers/magento/combined-resolver.js';
 import shopify from '../graphql/resolvers/shopify.js';
 import defaultResolver from '../graphql/resolvers.js';
 
@@ -21,7 +21,7 @@ const graphql = (req, res) => {
   }
 
   const graphqlMiddleware = graphqlHTTP({
-    schema: graphqlSchema,
+    schema: schema,
     rootValue: resolver,
   });
 
