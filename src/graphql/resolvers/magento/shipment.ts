@@ -1,31 +1,36 @@
 import { GraphqlService } from "../../../services/graphql-service.js";
-import { PRODUCTS_QUERY } from '../../queries/magento/product.js';
-import Product from '../../../models/Product.js';
-import {MagentoProductInterface, QueryProductsArgs, ResolvedProducts, ProductsQueryVariables } from "../../../types/graphql/index.js";
+import { ResolvedShipment, CreateShipmentQueryArgs, CreateShipmentQueryVariables } from "../../../types/graphql/index.js";
+import { CREATE_SHIPMENT_QUERY } from '../../queries/magento/shipment.js';
+import { OrderInterface, ShipmentInterface } from "../../../types/index.js";
+import Order from "../../../models/Order.js";
+import Shipment from "../../../models/Shipment.js";
+import Tracking from "../../../models/Tracking.js";
 
 const graphqlService = new GraphqlService(process.env.MAGENTO_GRAPHQL_URL!);
 
 export default {
-    products: async (args: QueryProductsArgs, context: any) => {
-        const variables: ProductsQueryVariables = {filter: {}}
-        if (args?.inputData.limit) {
-            variables['pageSize'] = args.inputData.limit
+    createShipment: async (args: CreateShipmentQueryArgs, context: any) => {
+        const variables: CreateShipmentQueryVariables = {
+            input: {
+                order_id: args.inputData.orderId
+            }
         }
+
         const result = await graphqlService.sendQuery({
-            query: PRODUCTS_QUERY,
+            query: CREATE_SHIPMENT_QUERY,
             variables: variables
         });
 
-        const products: Array<MagentoProductInterface> = result?.data?.products?.items || [];
-
-        const ResolvedProducts: ResolvedProducts = {
-            items: products.map((product: MagentoProductInterface) => {
-                return new Product(product.name, product.sku)
-            }),
-            totalProducts: result?.data?.products?.total_count || 0,
-            pageSize: result?.data?.products?.page_info?.page_size || 0
+        const ResolvedShipment: ResolvedShipment = {
+            order: <OrderInterface>new Order(result.data.createShipment.order.order_id, result.data.createShipment.order.order_increment_id),
+            shipment: <ShipmentInterface>new Shipment(
+                result.data.createShipment.shipment.increment_id,
+                result.data.createShipment.shipment.tracks.map(
+                    (track: { track_number: string, carrier_code: string }) => new Tracking(track.track_number, track.carrier_code)
+                )
+            )
         };
 
-        return ResolvedProducts
+        return ResolvedShipment
     }
 }

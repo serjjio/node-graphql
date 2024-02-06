@@ -1,25 +1,12 @@
-import {QueryVariables} from "./query.js";
-
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-import {ProductInterface} from "../product.js";
-
-export type Maybe<T> = T | null;
-
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-    ID: string;
-    String: string;
-    Boolean: boolean;
-    Int: number;
-    Float: number;
-    JSON: any;
-};
+import { QueryVariables } from "./query.js";
+import { ProductInterface } from "../index.js";
+import { Maybe, Exact, Scalars } from "./default.js"
 
 export type ProductInputData = {
     limit: Scalars['Int'];
 };
 
-export type QueryProductsArgs = {
+export type ProductsQueryArgs = {
     inputData: ProductInputData;
 };
 

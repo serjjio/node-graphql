@@ -21,7 +21,6 @@ export class GraphqlService {
 
             return response.data;
         } catch (error) {
-            console.log(error);
             typeof error === 'object'
                 && error !== null
                 && 'message' in error

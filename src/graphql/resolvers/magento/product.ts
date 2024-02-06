@@ -1,12 +1,12 @@
 import { GraphqlService } from "../../../services/graphql-service.js";
 import { PRODUCTS_QUERY } from '../../queries/magento/product.js';
 import Product from '../../../models/Product.js';
-import {MagentoProductInterface, QueryProductsArgs, ResolvedProducts, ProductsQueryVariables } from "../../../types/graphql/index.js";
+import {MagentoProductInterface, ProductsQueryArgs, ResolvedProducts, ProductsQueryVariables } from "../../../types/graphql/index.js";
 
 const graphqlService = new GraphqlService(process.env.MAGENTO_GRAPHQL_URL!);
 
 export default {
-    products: async (args: QueryProductsArgs, context: any) => {
+    products: async (args: ProductsQueryArgs, context: any) => {
         const variables: ProductsQueryVariables  = {filter: {}}
 
         if (args?.inputData.limit) {
