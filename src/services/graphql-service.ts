@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { QueryVariables } from "../types/graphql/index.js";
 
 export class GraphqlService {
     url: string
@@ -6,7 +7,7 @@ export class GraphqlService {
         this.url = url;
     }
 
-    async sendQuery({query, variables}) {
+    async sendQuery({query, variables}: {query: string; variables: QueryVariables}) {
         try {
             const response = await axios.post(
                 this.url,
@@ -21,7 +22,10 @@ export class GraphqlService {
             return response.data;
         } catch (error) {
             console.log(error);
-            console.error('Error sending GraphQL request:', error.message);
+            typeof error === 'object'
+                && error !== null
+                && 'message' in error
+                && console.error('Error sending GraphQL request:', error.message);
             throw error;
         }
     }

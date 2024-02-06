@@ -1,22 +1,9 @@
 import { buildSchema } from 'graphql';
 
 export default buildSchema(`
-    type Product {
-        title: String!
-        identifier: String!
+    type Mutation {
+        createShipment(inputData: ShipmentInput!): ShipmentOutput!
     }
-
-    type ProductData {
-        items: [Product!]!
-        totalProducts: Int!
-        pageSize: Int!
-    }
-
-    input ProductInputData {
-        limit: Int
-    }
-
-    type Query {
-        shipment(inputData: ProductInputData!): ProductData!
-    }
+    
+    
 `);

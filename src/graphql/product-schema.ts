@@ -6,7 +6,7 @@ export default buildSchema(`
         identifier: String!
     }
 
-    type ProductData {
+    type ProductOutputData {
         items: [Product!]!
         totalProducts: Int!
         pageSize: Int!
@@ -17,6 +17,6 @@ export default buildSchema(`
     }
 
     type Query {
-        products(inputData: ProductInputData!): ProductData!
+        products(inputData: ProductInputData!): ProductOutputData!
     }
 `);

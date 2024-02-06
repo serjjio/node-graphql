@@ -1,7 +1,9 @@
-export default class Product {
+import {ProductInterface} from "../types/product.js";
+
+export default class Product implements ProductInterface{
     title: string
-    identifier: number
-    constructor(title: string, identifier: number) {
+    identifier: string
+    constructor(title: string, identifier: string) {
         this.title = title;
         this.identifier = identifier
     }

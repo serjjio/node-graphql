@@ -1,12 +1,13 @@
 import { graphqlHTTP } from 'express-graphql';
 
+import { Request, Response } from 'express';
+
 import schema from '../graphql/combined-schema.js';
-import magento from '../graphql/resolvers/magento/combined-resolver.js';
-import shopify from '../graphql/resolvers/shopify.js';
-import defaultResolver from '../graphql/resolvers.js';
+import magento from '../graphql/resolvers/magento/resolvers.js';
+import shopify from '../graphql/resolvers/shopify/resolvers.js';
 
 //Calculates resolvers depending on the platform
-const graphql = (req, res) => {
+const graphql = (req: Request, res: Response) => {
   let resolver = undefined;
 
   switch (process.env.BACKEND_PLATFORM) {
@@ -17,7 +18,7 @@ const graphql = (req, res) => {
       resolver = shopify;
       break;
     default:
-      resolver = defaultResolver;
+      throw new Error('Failed to determine resolver')
   }
 
   const graphqlMiddleware = graphqlHTTP({

@@ -1,6 +1,6 @@
 const gql = String.raw;
 
-const Products = gql`
+export const PRODUCTS_QUERY = gql`
     query GetProducts($filter: ProductAttributeFilterInput! $pageSize: Int) {
     products(
       filter: $filter
@@ -18,5 +18,3 @@ const Products = gql`
     }
   }
 `;
-
-export default Products;
